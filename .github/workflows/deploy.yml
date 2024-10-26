@@ -18,6 +18,9 @@ jobs:
           distribution: temurin
           java-version: 17
 
+      - name: gradlew 파일에 실행 권한 추가
+        run: chmod +x ./gradlew
+
       - name: application.yml 파일 만들기
         run: echo "${{ secrets.APPLICATION_PROPERTIES }}" > ./src/main/resources/application.yml
 
@@ -45,10 +48,10 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script_stop: true
           script: |
-           rm -rf /home/ubuntu/github-actions/current
-           mkdir /home/ubuntu/github-actions/current
-           mv /home/ubuntu/github-actions/tobe/project.jar /home/ubuntu/github-actions/current/project.jar
-           cd /home/ubuntu/github-actions/current
-           sudo fuser -k -n tcp 8080 || true
-           nohup java -jar project.jar > ./output.log 2>&1 & 
-           rm -rf /home/ubuntu/github-actions/tobe
+            rm -rf /home/ubuntu/github-actions/current
+            mkdir /home/ubuntu/github-actions/current
+            mv /home/ubuntu/github-actions/tobe/project.jar /home/ubuntu/github-actions/current/project.jar
+            cd /home/ubuntu/github-actions/current
+            sudo fuser -k -n tcp 8080 || true
+            nohup java -jar project.jar > ./output.log 2>&1 & 
+            rm -rf /home/ubuntu/github-actions/tobe
