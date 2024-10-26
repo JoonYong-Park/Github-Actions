@@ -8,6 +8,6 @@ public class AppController {
 
   @GetMapping("/")
   public String home() {
-    return "Hello Joonyong!";
+    return "CICD with Github Actions";
   }
 }
