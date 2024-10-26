@@ -8,7 +8,7 @@ class GithubActionsApplicationTests {
 
 	@Test
 	void contextLoads() {
-		throw new RuntimeException("Test failed!");
+//		throw new RuntimeException("Test failed!");
 	}
 
 }
