@@ -1,15 +1,12 @@
-name: CI/CD Workflow
+name: Deploy To EC2
 
 on:
   push:
     branches:
       - master
-  pull_request:
-    branches:
-      - master
 
 jobs:
-  build-and-test:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Github Repository 파일 불러오기
@@ -29,28 +26,6 @@ jobs:
 
       - name: 테스트 및 빌드하기
         run: ./gradlew clean build
-
-      - name: 빌드 결과물 업로드
-        uses: actions/upload-artifact@v3
-        with:
-          name: build-output
-          path: build/libs/
-
-  deploy:
-    if: github.event_name == 'push'
-    needs: build-and-test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Github Repository 파일 불러오기
-        uses: actions/checkout@v4
-
-      - name: 빌드 결과물 다운로드
-        uses: actions/download-artifact@v3
-        with:
-          name: build-output
-
-      - name: 디렉토리 내용 확인
-        run: ls -al
 
       - name: AWS Resource에 접근할 수 있게 AWS credentials 설정
         uses: aws-actions/configure-aws-credentials@v4
